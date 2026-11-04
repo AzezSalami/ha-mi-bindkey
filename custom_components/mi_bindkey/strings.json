@@ -1,0 +1,63 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Get a Mi bind key",
+        "description": "Pick a Xiaomi Bluetooth device ({count} found nearby), or type its MAC address. Home Assistant will connect to it and **activate** it with a new local identity, the same way TelinkFlasher's \"Do Activation\" button does.\n\n⚠️ Activation replaces the device's existing keys. If the device is paired in the Mi Home app it will stop working there until you pair it again (which creates yet another key).\n\nThe device must be in range of a Bluetooth adapter or ESPHome proxy that supports active connections.",
+        "data": {
+          "address": "Device",
+          "apply_to_xiaomi_ble": "Save the key to the Xiaomi BLE integration"
+        },
+        "data_description": {
+          "apply_to_xiaomi_ble": "If this device is already set up in Xiaomi BLE, store the new key there and reload it."
+        }
+      },
+      "reconfigure": {
+        "title": "Activate again",
+        "description": "Re-activate {name}. This creates a new bind key and the old one stops working.",
+        "data": {
+          "apply_to_xiaomi_ble": "Save the key to the Xiaomi BLE integration"
+        }
+      },
+      "failed": {
+        "title": "Activation failed",
+        "description": "Could not activate {name}:\n\n`{error}`\n\nMove the device closer to an adapter or proxy, wake it (press its button if it has one), then submit to try again."
+      }
+    },
+    "progress": {
+      "activating": "Connecting to {name} and running the activation. This usually takes 10–30 seconds."
+    },
+    "create_entry": {
+      "activated": "Activation succeeded.\n\n**Bind key:** `{bind_key}`\n**Mi token:** `{token}`\n**Firmware:** {firmware}\n\n{xiaomi_ble}"
+    },
+    "error": {
+      "invalid_address": "Enter a Bluetooth MAC address like A4:C1:38:12:34:56."
+    },
+    "abort": {
+      "already_configured": "This device already has a Mi Bind Key entry. Use Reconfigure on it to activate again.",
+      "reactivated": "Activated again. New bind key: `{bind_key}`"
+    }
+  },
+  "entity": {
+    "sensor": {
+      "bind_key": { "name": "Bind key" },
+      "token": { "name": "Mi token" }
+    }
+  },
+  "services": {
+    "activate": {
+      "name": "Activate device",
+      "description": "Connects to a Xiaomi BLE device, activates it with a new local identity and returns the new bind key and token. The device's previous keys stop working.",
+      "fields": {
+        "address": {
+          "name": "Address",
+          "description": "Bluetooth MAC address of the device."
+        },
+        "apply_to_xiaomi_ble": {
+          "name": "Save to Xiaomi BLE",
+          "description": "Store the new key in the matching Xiaomi BLE entry and reload it."
+        }
+      }
+    }
+  }
+}

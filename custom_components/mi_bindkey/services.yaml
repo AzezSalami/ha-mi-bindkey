@@ -1,0 +1,11 @@
+activate:
+  fields:
+    address:
+      required: true
+      example: "A4:C1:38:12:34:56"
+      selector:
+        text:
+    apply_to_xiaomi_ble:
+      default: true
+      selector:
+        boolean:
